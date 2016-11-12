@@ -12,10 +12,7 @@ module Btcmrb
     BASE_URI              = 'https://api.btcmarkets.net'
     include HTTParty
 
-    attr_accessor :base_uri, :timestamp
-
     def initialize
-      @base_uri = BASE_URI
     end
 
     def send_request(object)
@@ -38,7 +35,8 @@ module Btcmrb
           { :method => object[:verb],
             :authentication => object[:auth],
             :timestamp => timestamp,
-            :encoded_signature => encoded_signature
+            :encoded_signature => encoded_signature,
+            :body => object[:body]
         })
       end
 
@@ -51,38 +49,39 @@ module Btcmrb
       end
 
       def format_request(options)
-        default = options[:uri] + "\n" + options[:timestamp] + "\n"
+        default = options[:uri] + "\n" + options[:timestamp] + "\n"#+ '{"currency":"AUD", "instrument":"BTC", "limit":"10"}'
         unless options[:body].empty?
-          default = primary + options[:body]
+          default = default + options[:body].to_json.to_s
         end
         default
       end
 
       def send(uri, options={})
         response = nil
-        default_headers = {
+        headers = {
           'Accept-Charset' => 'UTF-8',
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
           'User-Agent' => "BTCMRB Ruby Gem v#{Btcmrb::VERSION}"
         }
 
+        if options[:authentication]
+          headers.merge!(
+          { 'apikey' => BTCM_ACCESS_KEY ,
+            'signature' => options[:encoded_signature],
+            'timestamp' => options[:timestamp]
+            }).to_json
+        end
+
         if options[:authentication] && options[:method] == "POST"
-          default_headers.merge!(
-            { 'apikey' => BTCM_ACCESS_KEY ,
-              'signature' => options[:encoded_signature],
-              'timestamp' => options[:timestamp]
-            }).to_json
-            # TODO
+          HTTParty.post(BASE_URI + uri, :headers => headers, :body => options[:body].to_json)
+
         elsif options[:authentication] && options[:method] == "GET"
-          default_headers.merge!(
-            { 'apikey' => BTCM_ACCESS_KEY ,
-              'signature' => options[:encoded_signature],
-              'timestamp' => options[:timestamp]
-            }).to_json
-          HTTParty.get(BASE_URI + uri, headers: default_headers)
+          HTTParty.get(BASE_URI + uri, :headers => headers)
+
         else
-          response = HTTParty.get(BASE_URI + uri)
+          HTTParty.get(BASE_URI + uri)
+
         end
       end
 
