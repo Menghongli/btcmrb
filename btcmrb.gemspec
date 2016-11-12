@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.files         = Dir.glob("lib/**/*") + %w(LICENSE.md README.md Gemfile)
   s.require_path  = 'lib'
   s.license       = 'MIT'
-  s.homepage      = 'http://rubygems.org/gems/btcmrb'
+  s.homepage      = 'https://github.com/tennantje/btcmrb'
 
   s.add_dependency('httparty', '~> 0.14.0')
 
