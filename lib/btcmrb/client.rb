@@ -45,11 +45,11 @@ module Btcmrb
     private
 
       def create_timestamp
-        (Time.now.to_f * 1000).to_i.to_s
+        DateTime.now.strftime('%Q')
       end
 
       def format_request(options)
-        default = options[:uri] + "\n" + options[:timestamp] + "\n"#+ '{"currency":"AUD", "instrument":"BTC", "limit":"10"}'
+        default = options[:uri] + "\n" + options[:timestamp] + "\n"
         unless options[:body].empty?
           default = default + options[:body].to_json.to_s
         end
@@ -75,13 +75,10 @@ module Btcmrb
 
         if options[:authentication] && options[:method] == "POST"
           HTTParty.post(BASE_URI + uri, :headers => headers, :body => options[:body].to_json)
-
         elsif options[:authentication] && options[:method] == "GET"
           HTTParty.get(BASE_URI + uri, :headers => headers)
-
         else
           HTTParty.get(BASE_URI + uri)
-
         end
       end
 

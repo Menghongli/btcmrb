@@ -8,34 +8,32 @@ module Btcmrb
       # {"currency":"AUD","instrument":"BTC","limit":10,"since":33434568724}
       # {"success":true,"errorCode":null,"errorMessage":null,"orders":[{"id":1003245675,"currency":"AUD","instrument":"BTC","orderSide":"Bid","ordertype":"Limit","creationTime":1378862733366,"status":"Placed","errorMessage":null,"price":13000000000,"volume":10000000,"openVolume":10000000,"clientRequestId":null,"trades":[]},{"id":4345675,"currency":"AUD","instrument":"BTC","orderSide":"Ask","ordertype":"Limit","creationTime":1378636912705,"status":"Fully Matched","errorMessage":null,"price":13000000000,"volume":10000000,"openVolume":0,"clientRequestId":null,"trades":[{"id":5345677,"creationTime":1378636913151,"description":null,"price":13000000000,"volume":10000000,"fee":100000}]}]}
 
-
       # Implementation
       {
         :uri => "/order/history",
-        :body => {:currency => "AUD", :instrument => "BTC", :limit => 10},
+        :body => {:currency => "AUD", :instrument => "BTC", :limit => 10,"since":1},
         :verb => "POST",
         :auth => true
       }
     end
 
     # Similar to Index, but only returns open orders
-    def open
+    def self.open_orders
       # Documentation
       # POST "/order/open"
       # {"currency":"AUD","instrument":"BTC","limit":10,"since":33434568724}
       # {"success":true,"errorCode":null,"errorMessage":null,"orders":[{"id":1003245675,"currency":"AUD","instrument":"BTC","orderSide":"Bid","ordertype":"Limit","creationTime":1378862733366,"status":"Placed","errorMessage":null,"price":13000000000,"volume":10000000,"openVolume":10000000,"clientRequestId":null,"trades":[]},{"id":4345675,"currency":"AUD","instrument":"BTC","orderSide":"Ask","ordertype":"Limit","creationTime":1378636912705,"status":"Fully Matched","errorMessage":null,"price":13000000000,"volume":10000000,"openVolume":0,"clientRequestId":null,"trades":[{"id":5345677,"creationTime":1378636913151,"description":null,"price":13000000000,"volume":10000000,"fee":100000}]}]}
 
-
       # Implementation
-      # {
-      #   :uri => "/order/open",
-      #   :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":33434568724}, # Sample Body
-      #   :verb => "POST",
-      #   :auth => true
-      # }
+      {
+        :uri => "/order/open",
+        :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":1},
+        :verb => "POST",
+        :auth => true
+      }
     end
 
-    def trade_history
+    def self.trade_history
       # Documentation
       # POST "/order/trade/history"
       # since parameter - a trade id.
@@ -43,30 +41,31 @@ module Btcmrb
 
 
       # Implementation
-      # {
-      #   :uri => "/order/trade/history",
-      #   :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":33434568724}, # Sample Body
-      #   :verb => "POST",
-      #   :auth => true
-      # }
+      {
+        :uri => "/order/trade/history",
+        :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":1},
+        :verb => "POST",
+        :auth => true
+      }
     end
 
-    def show
+    def self.show(*ids)
       # Documentation
       # POST "/order/detail"
       # {"orderIds":[6840125478]}
 
 
       # Implementation
-      # {
-      #   :uri => "/order/detail",
-      #   :body => {"orderIds":[6840125478]}, # Sample Body
-      #   :verb => "POST",
-      #   :auth => true
-      # }
+      {
+        :uri => "/order/detail",
+        :body => {"orderIds":ids},
+        :verb => "POST",
+        :auth => true
+      }
     end
 
-    def create
+    def self.create
+      raise NotImplementedError
       # Documentation
       # POST "/order/create"
       # The clientRequestId is not currently used but must be specified. Any string is valid.
@@ -85,19 +84,19 @@ module Btcmrb
       # }
     end
 
-    def cancel
+    def self.cancel(id)
       # Documentation
       # POST "/order/cancel"
       # {"orderIds":[6840125478]}
       # => {"success":true,"errorCode":null,"errorMessage":null,"responses":[{"success":false,"errorCode":3,"errorMessage":"order does not exist.","id":6840125478}]}
 
       # Implementation
-      # {
-      #   :uri => "/order/cancel",
-      #   :body => {"orderIds":[6840125478]}, # Sample Body
-      #   :verb => "POST",
-      #   :auth => true
-      # }
+      {
+        :uri => "/order/cancel",
+        :body => {"orderIds":id},
+        :verb => "POST",
+        :auth => true
+      }
     end
 
   end
