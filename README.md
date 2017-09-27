@@ -79,7 +79,10 @@ order_detail = Btcmrb::Order.show(123456789,987654321)
 client.send_request(order_detail)
 # => TBC
 
-# TODO: Create New Orders
+client = Btcmrb.new
+order_detail = Btcmrb::Order.create('AUD','BTC',4000,1,'Bid','Limit')
+client.send_request(order_detail)
+# => TBC
 
 client = Btcmrb.new
 order_to_cancel = Btcmrb::Order.cancel(123456789)

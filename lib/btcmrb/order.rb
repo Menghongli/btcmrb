@@ -64,8 +64,7 @@ module Btcmrb
       }
     end
 
-    def self.create
-      raise NotImplementedError
+    def self.create(currency, instrument, price, volume, order_side, order_type)
       # Documentation
       # POST "/order/create"
       # The clientRequestId is not currently used but must be specified. Any string is valid.
@@ -76,12 +75,12 @@ module Btcmrb
       # => {"success":false,"errorCode":3,"errorMessage":"Invalid argument.","id":0,"clientRequestId":"abc-cdf-1000"}
 
       # Implementation
-      # {
-      #   :uri => "/order/create",
-      #   :body => {"currency":"AUD","instrument":"BTC","price":13000000000,"volume":10000000,"orderSide":"Bid","ordertype":"Limit","clientRequestId":"abc-cdf-1000"}, # Sample Body
-      #   :verb => "POST",
-      #   :auth => true
-      # }
+      {
+        :uri => "/order/create",
+        :body => {"currency":currency,"instrument":instrument,"price":(price*100000000).round(0),"volume":(volume*100000000).round(0),"orderSide":order_side,"ordertype":order_type,"clientRequestId":"abc-cdf-1000"},
+        :verb => "POST",
+        :auth => true
+      }
     end
 
     def self.cancel(id)
