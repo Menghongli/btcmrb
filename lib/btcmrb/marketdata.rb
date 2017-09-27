@@ -1,9 +1,9 @@
 module Btcmrb
   class Marketdata
 
-    def self.tick
+    def self.tick(instrument, currency)
       {
-        :uri => "/market/BTC/AUD/tick",
+        :uri => "/market/#{instrument}/#{currency}/tick",
         :body => {},
         :verb => "GET",
         :auth => false
@@ -11,9 +11,9 @@ module Btcmrb
       #=> {"bestBid":844.0,"bestAsk":844.98,"lastPrice":845.0,"currency":"AUD","instrument":"BTC","timestamp":1476242958,"volume24h":172.60804}
     end
 
-    def self.orderbook
+    def self.orderbook(instrument, currency)
       {
-        :uri => "/market/BTC/AUD/orderbook",
+        :uri => "/market/#{instrument}/#{currency}/orderbook",
         :body => {},
         :verb => "GET",
         :auth => false
@@ -21,9 +21,9 @@ module Btcmrb
       #=> {"currency":"AUD","instrument":"BTC","timestamp":1476243360,"asks":[[844.98,0.45077821],[845.0,2.7069457],[848.68,2.58512],[848.76,0.29745]],"bids":[[844.0,0.00489636],[840.21,0.060724],[840.16,0.1180803],[840.1,0.32130103]]}
     end
 
-    def self.trades
+    def self.trades(instrument, currency)
       {
-        :uri => "/market/BTC/AUD/trades",
+        :uri => "/market/#{instrument}/#{currency}/trades",
         :body => {},
         :verb => "GET",
         :auth => false
