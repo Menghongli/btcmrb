@@ -5,7 +5,7 @@ require 'btcmrb/version'
 Gem::Specification.new do |s|
   s.name          = 'btcmrb'
   s.version       = Btcmrb::VERSION
-  s.date          = '2016-11-12'
+  s.date          = '2017-10-11'
   s.summary       = "Unofficial Ruby Gem for btcmarkets.net API"
   s.description   = "Unofficial Ruby Gem for btcmarkets.net API"
   s.authors       = ["Jeremy Tennant"]
