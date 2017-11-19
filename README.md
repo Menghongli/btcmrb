@@ -28,6 +28,11 @@ client = Btcmrb.new
 balance_request = Btcmrb::Account.balance
 client.send_request(balance_request)
 # => [{"balance":1000000000,"pendingFunds":0,"currency":"AUD"},{"balance":1000000000,"pendingFunds":0,"currency":"BTC"},{"balance":1000000000,"pendingFunds":0,"currency":"LTC"}]
+
+client = Btcmrb.new
+tradingfee_request = Btcmrb::Account.tradingfee('BTC','AUD')
+client.send_request(tradingfee_request)
+# => [{"success"=>true, "errorCode"=>nil, "errorMessage"=>nil, "tradingFeeRate"=>749999, "volume30Day"=>396768299721}]
 ```
 
 ### Market Data API

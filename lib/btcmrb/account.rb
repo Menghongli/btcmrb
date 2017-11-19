@@ -10,5 +10,14 @@ module Btcmrb
       }
     end
 
+    def self.tradingfee(instrument, currency)
+      {
+        :uri => "/account/#{instrument}/#{currency}/tradingfee",
+        :body => {},
+        :verb => "GET",
+        :auth => true
+      }
+    end
+
   end
 end
