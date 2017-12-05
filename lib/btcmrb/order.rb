@@ -1,7 +1,7 @@
 module Btcmrb
   class Order
 
-    def self.all
+    def self.all(instrument="BTC", limit=10)
       # Documentation
       # POST "/order/history"
       # since parameter - an order id.
@@ -11,14 +11,14 @@ module Btcmrb
       # Implementation
       {
         :uri => "/order/history",
-        :body => {:currency => "AUD", :instrument => "BTC", :limit => 10,"since":1},
+        :body => {"currency":"AUD","instrument":instrument,"limit":limit,"since":1},
         :verb => "POST",
         :auth => true
       }
     end
 
     # Similar to Index, but only returns open orders
-    def self.open_orders
+    def self.open_orders(instrument="BTC", limit=10)
       # Documentation
       # POST "/order/open"
       # {"currency":"AUD","instrument":"BTC","limit":10,"since":33434568724}
@@ -27,13 +27,13 @@ module Btcmrb
       # Implementation
       {
         :uri => "/order/open",
-        :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":1},
+        :body => {"currency":"AUD","instrument":instrument,"limit":limit,"since":1},
         :verb => "POST",
         :auth => true
       }
     end
 
-    def self.trade_history
+    def self.trade_history(instrument="BTC", limit=10)
       # Documentation
       # POST "/order/trade/history"
       # since parameter - a trade id.
@@ -43,7 +43,7 @@ module Btcmrb
       # Implementation
       {
         :uri => "/order/trade/history",
-        :body => {"currency":"AUD","instrument":"BTC","limit":10,"since":1},
+        :body => {"currency":"AUD","instrument":instrument,"limit":limit,"since":1},
         :verb => "POST",
         :auth => true
       }
@@ -64,7 +64,7 @@ module Btcmrb
       }
     end
 
-    def self.create(currency, instrument, price, volume, order_side, order_type)
+    def self.create(currency, instrument, price, volume, order_side, order_type, client_request_id="abc-cdf-1000")
       # Documentation
       # POST "/order/create"
       # The clientRequestId is not currently used but must be specified. Any string is valid.
@@ -77,7 +77,7 @@ module Btcmrb
       # Implementation
       {
         :uri => "/order/create",
-        :body => {"currency":currency,"instrument":instrument,"price":(price*100000000).round(0),"volume":(volume*100000000).round(0),"orderSide":order_side,"ordertype":order_type,"clientRequestId":"abc-cdf-1000"},
+        :body => {"currency":currency,"instrument":instrument,"price":(price*100000000).round(0),"volume":(volume*100000000).round(0),"orderSide":order_side,"ordertype":order_type,"clientRequestId":client_request_id},
         :verb => "POST",
         :auth => true
       }
