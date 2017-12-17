@@ -12,7 +12,7 @@ $ gem install btcmrb
 ```
 Or in your application's Gemfile:
 ```
-gem 'btcmrb', '~> 0.1.5'
+gem 'btcmrb', '~> 0.1.9'
 ```
 ### Create some environment variables
 https://btcmarkets.net/account/apikey
